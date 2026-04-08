@@ -8,5 +8,5 @@ export default function TaskCard({ title, done }) {
       </span>
       {done && <span className="text-green-600 text-xs font-bold">Done</span>}
     </div>
-  );
-}
+    
+)}
