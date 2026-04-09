@@ -14,5 +14,3 @@ export default function TaskList({ tasks }) {
         </ul>
     );
 }
-    
-{isLoading ? <Spinner /> : <TaskList />}
