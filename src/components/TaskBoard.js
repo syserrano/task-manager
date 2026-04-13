@@ -1,18 +1,27 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import TaskList from './TaskList';
 import AddTaskForm from './AddTaskForm';
 import FilterBar from './FilterBar';
 
 export default function TaskBoard() {
     const [tasks, setTasks] = useState(() => {
-        if (typeof window !== 'undefined') return[]
+        if (typeof window === 'undefined') return[]
         const saved = localStorage.getItem('tasks');
-        return saved ? JSON.parse(saved) : []
+        return saved ? JSON.parse(saved) : [];
     });
     
     const [filter, setFilter] = useState('all');
+
+    useEffect(() => {
+        const active = tasks.filter((t) => !t.done).length;
+        document.title = `Task Manager (${active} active)`;
+        return () => {
+            document.title = 'Task Manager';
+        }
+    }, [tasks]);
+
 
     function handleToggle(id){
         setTasks(tasks.map((t) => 
@@ -31,6 +40,8 @@ export default function TaskBoard() {
         if (filter === 'completed') return t.done;
         return true; // 'all'
     });
+
+
 
     return (
         <div className="max-w-md mx-auto mt-8">
