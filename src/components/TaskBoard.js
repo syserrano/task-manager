@@ -1,13 +1,18 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import TaskList from './TaskList';
 import AddTaskForm from './AddTaskForm';
+import FilterBar from './FilterBar';
 
 export default function TaskBoard() {
-    const [tasks, setTasks] = useState(
-        [{ id: 't1', title: 'Buy milk', done: false }, 
-        { id: 't2', title: 'Walk the dog', done: true }]);
+    const [tasks, setTasks] = useState(() => {
+        if (typeof window !== 'undefined') return[]
+        const saved = localStorage.getItem('tasks');
+        return saved ? JSON.parse(saved) : []
+    });
+    
+    const [filter, setFilter] = useState('all');
 
     function handleToggle(id){
         setTasks(tasks.map((t) => 
@@ -21,12 +26,19 @@ export default function TaskBoard() {
     const completedCount = tasks.filter((t) => t.done).length;
     const totalCount = tasks.length;
 
+    const visibleTasks = tasks.filter((t) => {
+        if (filter === 'active') return !t.done;
+        if (filter === 'completed') return t.done;
+        return true; // 'all'
+    });
+
     return (
         <div className="max-w-md mx-auto mt-8">
             <p className="text-sm text-gray-500 mb-2">
                 {completedCount} of {totalCount} tasks completed
             </p>
-            <TaskList tasks={tasks} onToggle={handleToggle} onDelete={handleDelete} />
+            <FilterBar currentFilter={filter} onChange={setFilter} />
+            <TaskList tasks={visibleTasks} onToggle={handleToggle} onDelete={handleDelete} />
             <AddTaskForm onAdd={(title) => setTasks([...tasks, { id: `t${Date.now()}`, title, done: false }])} />
         </div>
     );
