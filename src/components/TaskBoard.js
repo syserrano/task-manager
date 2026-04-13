@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import TaskList from './TaskList';
+import AddTaskForm from './AddTaskForm';
 
 export default function TaskBoard() {
     const [tasks, setTasks] = useState(
@@ -26,6 +27,7 @@ export default function TaskBoard() {
                 {completedCount} of {totalCount} tasks completed
             </p>
             <TaskList tasks={tasks} onToggle={handleToggle} onDelete={handleDelete} />
+            <AddTaskForm onAdd={(title) => setTasks([...tasks, { id: `t${Date.now()}`, title, done: false }])} />
         </div>
     );
 }
