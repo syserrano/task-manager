@@ -1,20 +1,23 @@
 'use client';
 
-export default function TaskCard({ title, done, onToggle }) {
+export default function TaskCard({ title, done, onToggle, onDelete }) {
 
   return (
     <div className="flex items-center gap-2 p-3 border-b">
-      <span
-        className={done ? 'line-through text-gray-400' : 'text-gray-900'}
-      >
-        {title}                       {/* {} escapes into JS */}
+      <input
+        type="checkbox"
+        checked={done}
+        onChange={onToggle}
+        className="form-checkbox h-5 w-5 text-blue-600"
+      />
+      <span className={`flex-1 text-sm ${done ? 'line-through text-gray-500' : ''}`}>
+        {title}
       </span>
-      {done && (<span className="text-green-600 text-xs font-bold">Done</span>)}
       <button
-        className="text-sm text-pink-500 hover:text-pink-700"
-        onClick={onToggle}
+        className="text-sm text-red-500 hover:text-red-700"
+        onClick={onDelete}
       >
-        {done ? "Undo" : "Mark Done"}
+        Delete
       </button>
     </div> 
 )}
