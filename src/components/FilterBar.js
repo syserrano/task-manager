@@ -13,11 +13,19 @@ export default function FilterBar({ currentFilter, onChange }) {
                 <button
                     key={id}
                     onClick={() => onChange(id)}
-                    className={`px-3 py-1 rounded text-sm ${
-                        currentFilter === id
-                            ? 'bg-blue-500 text-white'
-                            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                    }`}
+                    style={{
+                        padding: '6px 18px',
+                        borderRadius: '7px',
+                        border: 'none',
+                        fontSize: '13px',
+                        fontFamily: "'DM Sans', sans-serif",
+                        fontWeight: currentFilter === id ? 500 : 400,
+                        cursor: 'pointer',
+                        transition: 'all 0.15s ease',
+                        background: currentFilter === id ? '#fff' : 'transparent',
+                        color: currentFilter === id ? '#3d2c1e' : '#b08070',
+                        boxShadow: currentFilter === id ? '0 1px 4px rgba(93,45,10,0.1)' : 'none',
+                    }}
                 >
                     {label}
                 </button>

@@ -18,11 +18,33 @@ export default function AddTaskForm({ onAdd }) {
                 value = {title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder='New Task...'
-                className='flex-1 border rounded px-3 py-2 text-sm'
+                style={{
+                    flex: 1,
+                    padding: '12px 16px',
+                    fontSize: '14px',
+                    fontFamily: "'DM Sans', sans-serif",
+                    background: '#fff',
+                    border: '1px solid #f0ddd2',
+                    borderRadius: '12px',
+                    outline: 'none',
+                    color: '#3d2c1e',
+                    transition: 'border-color 0.2s',
+                }}
             />
             <button 
                 type='submit' 
-                className='bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600'>
+                style={{
+                    padding: '12px 16px',
+                    fontSize: '14px',
+                    fontFamily: "'DM Sans', sans-serif",
+                    background: '#3d2c1e',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: '12px',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.2s',
+                }}
+                className='hover:bg-blue-600'>
                 Add
             </button>
         </form>
