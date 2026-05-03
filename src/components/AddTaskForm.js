@@ -7,7 +7,7 @@ export default function AddTaskForm({ onAdd }) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        if (!title.trim() === "") return; // Prevent adding empty tasks
+        if (title.trim() === "") return; // Prevent adding empty tasks
         onAdd(title.trim());
         setTitle(""); // Clear the input after adding
     }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect, use} from 'react';
 import TaskList from './TaskList';
 import AddTaskForm from './AddTaskForm';
 import FilterBar from './FilterBar';
@@ -15,13 +15,21 @@ export default function TaskBoard() {
     const [filter, setFilter] = useState('all');
 
     useEffect(() => {
-        const active = tasks.filter((t) => !t.done).length;
-        document.title = `Task Manager (${active} active)`;
+        const activeCount = tasks.filter((t) => !t.done).length;
+        document.title = `Task Manager (${activeCount} active)`;
         return () => {
             document.title = 'Task Manager';
         }
     }, [tasks]);
 
+    useEffect(() => {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }, [tasks]);
+
+    function handleAdd(title) {
+        const newTask = { id: `t${Date.now()}`, title, done: false };
+        setTasks([...tasks, newTask]);
+    }
 
     function handleToggle(id){
         setTasks(tasks.map((t) => 
@@ -41,8 +49,6 @@ export default function TaskBoard() {
         return true; // 'all'
     });
 
-
-
     return (
         <div className="max-w-md mx-auto mt-8">
             <p className="text-sm text-gray-500 mb-2">
@@ -50,7 +56,7 @@ export default function TaskBoard() {
             </p>
             <FilterBar currentFilter={filter} onChange={setFilter} />
             <TaskList tasks={visibleTasks} onToggle={handleToggle} onDelete={handleDelete} />
-            <AddTaskForm onAdd={(title) => setTasks([...tasks, { id: `t${Date.now()}`, title, done: false }])} />
+            <AddTaskForm onAdd={handleAdd} />
         </div>
     );
 }
